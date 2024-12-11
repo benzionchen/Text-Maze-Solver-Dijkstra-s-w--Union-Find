@@ -37,7 +37,7 @@ the maze cells along with the brackets were getting redundantly parsed in the ma
 
 Another issue I ran into was that my computer was not recognizing the proper compiler that I had installed. I installed MinGW, but for some reason, it kept recognizing the v6.3.0 of 
 it rather than using the updated compiler to run my code. And because of that, I ran into issues with not being able to run certain types of features only available to C++ 11 or higher.
-I finally got it to work by deleting all my PATHs in the virtual environment, reinstalling MinGW64 from different websites, and through trial and error, I was able to get the v14 one
-working.
+I finally got it to work by deleting all my PATHs in the virtual environment, reinstalling MinGW64 from several different websites, and through trial and error, I was able to get the v14 one
+working. 
 
 This concludes my final project! 
