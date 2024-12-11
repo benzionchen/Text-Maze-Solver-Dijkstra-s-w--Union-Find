@@ -4,6 +4,13 @@ Welcome to my 2270 Final Project where I built a Maze Solver that can solve any 
 using the Union-Find Data Structure and Dijkstra's algorithm. This is a text-based solver which means that if you change how the obstacles look, move around the "S" or "E", 
 or even move around the obstacles, as long as it's in the proper format, the algorithm will be able to traverse appropriately from start to end. 
 
+I originally wanted to do something related to maps and GPS but it looked like Faisal did it so I didn't want to seem like I was copying his idea. But I was still intrigued about Union Find 
+and how its runtime is the inverse Ackerman function (O(α(n))). This Data Structure saves computational bandwidth by avoiding the execution of Dijkstra's algorithm on a maze that has no theoretical
+solution. As the maze dynamically changes with new obstacles "x" being added and removed, Union-Find is well suited for these types of scenarios because it allows for efficient merging and 
+querying of connected components. If this was a LARGE maze (1000s+ cells) naive connectivity checks are computationally expensive. Preprocessing hte maze is O(nlog*n) time where n is the
+number of cells, and connectivity checks between cells is close to constant time. I encourage the user to add 1 thousand rows and columns with randomized obstacles and see how this algorithm
+handles it! 
+
 To run the algorithm, make sure you're in the correct directory ("MazeSolver") and paste `g++ main.cpp MazeSolver.cpp -o MazeSolver` into the terminal. Then `./MazeSolver` to run it. 
 
 MazeSolver.h is the header file that declares all of my declarations for classes and functions used. Here is where I declared Union-Find Class and its purpose is to check if two nodes
