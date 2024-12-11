@@ -4,7 +4,7 @@ Welcome to my 2270 Final Project where I built a Maze Solver that can solve any 
 using the Union-Find Data Structure and Dijkstra's algorithm. This is a text-based solver which means that if you change how the obstacles look, move around the "S" or "E", 
 or even move around the obstacles, as long as it's in the proper format, the algorithm will be able to traverse appropriately from start to end. 
 
-To run the algorithm, make sure you're in the correct directory ("MazeSolver") and paste "g++ main.cpp MazeSolver.cpp -o MazeSolver" into the terminal. Then "./MazeSolver" to run it. 
+To run the algorithm, make sure you're in the correct directory ("MazeSolver") and paste `g++ main.cpp MazeSolver.cpp -o MazeSolver` into the terminal. Then `./MazeSolver` to run it. 
 
 MazeSolver.h is the header file that declares all of my declarations for classes and functions used. Here is where I declared Union-Find Class and its purpose is to check if two nodes
 are in the same connected component. Some key things to take note of: `find(int x)` finds the root of the set containing `x`. `unite(int x, int y)` merges the sets containing x and y. 
