@@ -12,48 +12,50 @@ using namespace std;
 const vector<pair<int, int>> directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
 
 // Union-Find implementation
+// I discovered this data structure in my 3104 class as a part of the Kruskal lecture timestamped @ 5:22
+// https://youtu.be/N8K2quW4Fjs?si=PeT9CR1Qbl2avkzP&t=322
 UnionFind::UnionFind(int n)
 {
-    parent.resize(n);
-    rank.resize(n, 0);
-    for (int i = 0; i < n; ++i)
+    parent.resize(n);           // Create array with size n where each element stores its parent
+    rank.resize(n, 0);          // Initialize the rank (tree depth) of each element to 0
+    for (int i = 0; i < n; ++i) // Sets each element as its own parent initially (self-loop), each element is in its own set
     {
-        parent[i] = i;
+        parent[i] = i; // Set each element to be its own parent, each element starts in its own set basically
     }
 }
 
 int UnionFind::find(int x)
 {
-    if (parent[x] != x)
+    if (parent[x] != x) // If x is not its own parent, recursively find its parents' root
     {
-        parent[x] = find(parent[x]);
+        parent[x] = find(parent[x]); // Compress path by directly linking x to its root
     }
-    return parent[x];
+    return parent[x]; // Parent[x] is x's root
 }
 
-void UnionFind::unite(int x, int y)
+void UnionFind::unite(int x, int y) // Merges the set x and y unioning by rank
 {
-    int rootX = find(x);
+    int rootX = find(x); // First, find roots of x and y
     int rootY = find(y);
-    if (rootX != rootY)
+    if (rootX != rootY) // Only merge if x and y are in different sets & then compare ranks of x's root and y's root
     {
-        if (rank[rootX] > rank[rootY])
+        if (rank[rootX] > rank[rootY]) // If x's root is deeper, make y's root a child of rootX
         {
             parent[rootY] = rootX;
         }
-        else if (rank[rootX] < rank[rootY])
+        else if (rank[rootX] < rank[rootY]) // Vice Versa
         {
             parent[rootX] = rootY;
         }
         else
         {
-            parent[rootY] = rootX;
+            parent[rootY] = rootX; // If both trees have same depth, just make rootY a child of rootX and increment rootX's rank
             rank[rootX]++;
         }
     }
 }
 
-bool UnionFind::isConnected(int x, int y)
+bool UnionFind::isConnected(int x, int y) // If x and y are in the same set
 {
     return find(x) == find(y);
 }
@@ -62,29 +64,29 @@ bool UnionFind::isConnected(int x, int y)
 vector<vector<char>> readMaze(const string &filename)
 {
     vector<vector<char>> maze;
-    ifstream file(filename);
+    ifstream file(filename); // Open file, for each line, extract the character inside each set of brackets
     if (!file)
     {
-        cerr << "Error: Could not open file " << filename << endl;
+        cerr << "Error: Cannot open file " << filename << endl; // Error message if file is not openable
         exit(1);
     }
 
     string line;
-    while (getline(file, line))
+    while (getline(file, line)) // Read each line of the file into line
     {
         vector<char> row;
-        for (size_t i = 0; i < line.size(); i += 3)
-        {                            // Skip over brackets and spaces
-            char cell = line[i + 1]; // Extract the character inside [ ]
-            row.push_back(cell);
+        for (size_t i = 0; i < line.size(); i += 3) // Iterate over the line
+        {                                           // Skip over brackets and spaces
+            char cell = line[i + 1];                // Extract the character inside [ ], every cell is 3 chars wide, extract char inside brackets (S,_, x, or E)
+            row.push_back(cell);                    // Add character to current row
         }
-        maze.push_back(row);
+        maze.push_back(row); // Add each row to the maze grid
     }
-    file.close();
+    file.close(); // Close file + Return maze
     return maze;
 }
 
-// Function to display the maze
+// Function to display the maze and print it in the Terminal (make-shift UI)
 void displayMaze(const vector<vector<char>> &maze)
 {
     for (const auto &row : maze)
@@ -97,13 +99,14 @@ void displayMaze(const vector<vector<char>> &maze)
     }
 }
 
-// Function to write the maze to a file
+// Function to write the maze to a file with the idea to show whether the maze can or cannot be solved, and write it to a file
+// following the bracket format ("[ ]")
 void writeMazeToFile(const string &filename, const vector<vector<char>> &maze)
 {
     ofstream file(filename);
     if (!file)
     {
-        cerr << "Error: Could not write to file " << filename << endl;
+        cerr << "Error: Cannot write to file " << filename << endl;
         exit(1);
     }
 
@@ -118,7 +121,8 @@ void writeMazeToFile(const string &filename, const vector<vector<char>> &maze)
     file.close();
 }
 
-// Preprocess the maze with Union-Find
+// Preprocess the maze with Union-Find data structure by connecting traversable cells
+// Need to map 2D coordinates to 1D indices
 void preprocessMazeWithUnionFind(const vector<vector<char>> &maze, UnionFind &uf)
 {
     int rows = maze.size();
@@ -130,14 +134,14 @@ void preprocessMazeWithUnionFind(const vector<vector<char>> &maze, UnionFind &uf
     {
         for (int j = 0; j < cols; ++j)
         {
-            if (maze[i][j] != 'x')
-            { // Only consider traversable cells
+            if (maze[i][j] != 'x') // Only process cells that aren't obstacles, a.k.a. only traversable cells
+            {
                 for (const auto &[dx, dy] : directions)
                 {
                     int nx = i + dx, ny = j + dy;
                     if (nx >= 0 && nx < rows && ny >= 0 && ny < cols && maze[nx][ny] != 'x')
                     {
-                        uf.unite(getIndex(i, j), getIndex(nx, ny));
+                        uf.unite(getIndex(i, j), getIndex(nx, ny)); // For each cell that is traversable, connect it to its valid neighbors using "unite"
                     }
                 }
             }
@@ -146,6 +150,7 @@ void preprocessMazeWithUnionFind(const vector<vector<char>> &maze, UnionFind &uf
 }
 
 // Solve maze with Union-Find and Dijkstra
+// Check if S and E are in the same component (if not, maze = unsolvable)
 bool solveMazeWithUnionFindAndDijkstra(vector<vector<char>> &maze, const pair<int, int> &start, const pair<int, int> &end)
 {
     int rows = maze.size();
@@ -159,7 +164,7 @@ bool solveMazeWithUnionFindAndDijkstra(vector<vector<char>> &maze, const pair<in
 
     if (!uf.isConnected(getIndex(start.first, start.second), getIndex(end.first, end.second)))
     {
-        cerr << "No path exists between S and E due to disconnected components." << endl;
+        cerr << "No path exists between S and E due to being disconnected." << endl;
         return false;
     }
 
