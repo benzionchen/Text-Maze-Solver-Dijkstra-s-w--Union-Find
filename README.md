@@ -5,7 +5,7 @@ using the Union-Find Data Structure and Dijkstra's algorithm. This is a text-bas
 or even move around the obstacles, as long as it's in the proper format, the algorithm will be able to traverse appropriately from start to end. 
 
 I originally wanted to do something related to maps and GPS but it looked like another classmate (Faisal) did it so I didn't want to seem like I was copying his idea. But I was still intrigued about 
-Union Find and how its runtime is the inverse Ackerman function (O(α(n))). I first came across this Data Structure in my 3104 Algorithms class, and learned that it saves computational bandwidth by 
+Union-Find and how its runtime is the inverse Ackerman function (O(α(n))). I first came across this Data Structure in my 3104 Algorithms class, and learned that it saves computational bandwidth by 
 avoiding the execution of Dijkstra's algorithm on a maze that has no theoretical solution. As the maze dynamically changes with new obstacles "x" being added and removed, Union-Find is well suited 
 for these types of scenarios because it allows for efficient merging and querying of connected components. If this was a LARGE maze (1000s+ cells with many permutations) naive connectivity checks 
 are computationally expensive. Preprocessing the maze is O(nlog*n) time where n is the number of cells, and connectivity checks between cells is close to constant time. I encourage the user to add 
@@ -16,7 +16,7 @@ To run the algorithm, make sure you're in the correct directory ("MazeSolver") a
 MazeSolver.h is the header file that declares all of my declarations for classes and functions used. Here is where I declared Union-Find Class and its purpose is to check if two nodes
 are in the same connected component. Some key things to take note of: `find(int x)` finds the root of the set containing `x`. `unite(int x, int y)` merges the sets containing x and y. 
 `isConnected(int x, int y)` checks if x and y belong to the same set. I also need to read the maze, converting the file into a 2D vector, display the maze in the terminal, write an
-unsolved or solved maze into a new file, combine both union find and dijkstra's algorithm to solve the maze. 
+unsolved or solved maze into a new file, combine both Union-Find and Dijkstra's algorithm to solve the maze. 
 
 MazeSolver.cpp is the main implementation where UF is used to track components + merge components & checks using path compression (optimizing `find`) and union by rank (optimizing `unite`). 
 I had to do preprocessing with Union-Find where I connect adjacent traversable cells into components and I had to made sure these were not obstacles. For each cell in the maze, if it's
