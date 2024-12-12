@@ -5,10 +5,10 @@ using the Union-Find Data Structure and Dijkstra's algorithm. This is a text-bas
 or even move around the obstacles, as long as it's in the proper format, the algorithm will be able to traverse appropriately from start to end. 
 
 I originally wanted to do something related to maps and GPS but it looked like another classmate (Faisal) did it so I didn't want to seem like I was copying his idea. But I was still intrigued about 
-Union-Find and how its runtime is the inverse Ackerman function (O(α(n))). I first came across this Data Structure in my 3104 Algorithms class, and learned that it saves computational bandwidth by 
+Union-Find and how its runtime is the inverse Ackerman function (`O(α(n))`). I first came across this Data Structure in my 3104 Algorithms class, and learned that it saves computational bandwidth by 
 avoiding the execution of Dijkstra's algorithm on a maze that has no theoretical solution. As the maze dynamically changes with new obstacles "`x`" being added and removed, Union-Find is well suited 
 for these types of scenarios because it allows for efficient merging and querying of connected components. If this was a LARGE maze (1000s+ cells with many permutations) naive connectivity checks 
-are computationally expensive. Preprocessing the maze is O(nlog*n) time where n is the number of cells, and connectivity checks between cells is close to constant time. I encourage the user to add 
+are computationally expensive. Preprocessing the maze is `O(nlog*n)` time where n is the number of cells, and connectivity checks between cells is close to constant time. I encourage the user to add 
 1 thousand rows and columns with randomized obstacles and see how this algorithm handles it! 
 
 To run the algorithm, make sure you're in the correct directory ("MazeSolver") and paste `g++ main.cpp MazeSolver.cpp -o MazeSolver` into the terminal. Then `./MazeSolver` to run it. 
@@ -18,7 +18,7 @@ are in the same connected component. Some key things to take note of: `find(int 
 `isConnected(int x, int y)` checks if x and y belong to the same set. I also need to read the maze, converting the file into a 2D vector, display the maze in the terminal, write an
 unsolved or solved maze into a new file, combine both Union-Find and Dijkstra's algorithm to solve the maze. 
 
-MazeSolver.cpp is the main implementation where UF is used to track components + merge components & checks using path compression (optimizing `find`) and union by rank (optimizing `unite`). 
+MazeSolver.cpp is the main implementation where Union-Find is used to track components + merge components & checks using path compression (optimizing `find`) and union by rank (optimizing `unite`). 
 I had to do preprocessing with Union-Find where I connect adjacent traversable cells into components and I had to made sure these were not obstacles. For each cell in the maze, if it's
 traversable, attempt to connect it to the adjacent traversable cells, and I can use helper function to map the 2D coordinates to unique 1D index for Union-Find. Then I used Dijkstra's
 to find the shortest path using a priority queue `std::set` to store cells sorted by their distance from `S`. Then I initialize distances to all cells as infinity except `S` which is 0.
@@ -44,7 +44,9 @@ the maze cells along with the brackets were getting redundantly parsed in the ma
 
 Another issue I ran into was that my computer was not recognizing the proper compiler that I had installed. I installed MinGW, but for some reason, it kept recognizing the v6.3.0 of 
 it rather than using the updated compiler to run my code. And because of that, I ran into issues with not being able to run certain types of features only available to C++ 11 or higher.
-I finally got it to work by deleting all my PATHs in the virtual environment, reinstalling MinGW64 from several different websites, and through trial and error, I was able to get the v14 one
+I finally got it to work by deleting all my PATHs in the virtual environment, reinstalling MinGW64 from several different websites, and through trial and error, I was able to get the v14.2.0 one
 working. 
+
+I also explored potentially using OpenCV for this project, but I couldn't get OpenCV to run properly on my computer and my program couldn't recognize the library so I eventually pivoted away from that idea.
 
 This concludes my final project! 
