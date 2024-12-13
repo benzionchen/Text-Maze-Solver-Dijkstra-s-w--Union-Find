@@ -1,8 +1,9 @@
 Hello!
 
-Welcome to my 2270 Final Project where I built a Maze Solver that can solve any size grid with as many obstacles ("`x`") as possible. The algorithm will traverse from Start "`S`" to End "`E`" 
-using the Union-Find Data Structure and Dijkstra's algorithm. This is a text-based solver which means that if you change how the obstacles look, move around the "`S`" or "`E`", 
-or even move around the obstacles, as long as it's in the proper format, the algorithm will be able to traverse appropriately from start to end. 
+Welcome to my 2270 Final Project where I built a Maze Solver that can solve any size grid with as many obstacles ("`x`") as possible (as long as it's solvable). The algorithm will traverse from 
+Start "`S`" to End "`E`" using the Union-Find Data Structure and Dijkstra's algorithm. This is a text-based solver which means that if you change how the obstacles look, move around the "`S`" or 
+"`E`", or even move around the obstacles, as long as it's in the proper format, the algorithm will be able to traverse appropriately from start to end. When it traverses, it will leave behind 
+a "`.`" which tracks the path that it took to get to the final destination "`E`".
 
 I originally wanted to do something related to maps and GPS but it looked like another classmate (Faisal) did it so I didn't want to seem like I was copying his idea. But I was still intrigued about 
 Union-Find and how its runtime is the inverse Ackerman function (`O(α(n))`). I first came across this Data Structure in my 3104 Algorithms class, and learned that it saves computational bandwidth by 
@@ -43,7 +44,7 @@ Even if we increase the grid size: ![even if we increase the grid size it should
 One of the things I struggled with in this project was making sure that the algorithm was properly 1) parsing the maze and 2) returning a maze that is also properly parsed. This is
 a two part problem where when the new maze is being drawn, that it's not adding any additional brackets or elements. ![improper maze parsing](https://github.com/user-attachments/assets/0f62a5c9-a009-4bd9-8abe-2d085f2be8d4)
 This improper parsing of the maze was happening when the loop `for (char cell : line)` adds every character in the input line into the row vector. So that meant that the content of
-the maze cells along with the brackets were getting redundantly parsed in the maze, causing format issues. 
+the maze cells along with the brackets were getting redundantly parsed in the maze, causing formating issues. 
 
 Another issue I ran into was that my computer was not recognizing the proper compiler that I had installed. I installed MinGW, but for some reason, it kept recognizing the v6.3.0 of 
 it rather than using the updated compiler to run my code. And because of that, I ran into issues with not being able to run certain types of features only available to C++ 11 or higher.
