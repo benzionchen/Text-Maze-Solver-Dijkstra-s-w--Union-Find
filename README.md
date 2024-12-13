@@ -28,14 +28,15 @@ Process the cell with the smallest distance, and for each neighbor cell, update 
 potentially unsolveable mazes, and if that's the case, the program terminates early.
 
 Lastly, main.cpp was there to call the functions and tie it all together. It calls `solveMazeWithUnionFindAndDijkstra` where connectivity is checked + runs Dijkstra's Algorithm. If
-the maze is solvable, it displays and writes the solved maze to `solved_maze.txt` and if "S" and "E" are disconnected, the program reports unsolvable. 
+the maze is solvable, it displays and writes the solved maze to `solved_maze.txt` and if "`S`" and "`E`" are disconnected, the program reports unsolvable. 
 
 ![unsolveable](https://github.com/user-attachments/assets/94eadc6e-eb63-4032-8bd1-7c76bede5bbb)
 
 When there are changes, the maze will dynamically find a new solution unless it's impossible. Shown below: 
+
 Adding new obstacles: ![maze will dynamically find new solution](https://github.com/user-attachments/assets/efff6b39-330f-4f5e-bfff-ce7fc087bb19)
 
-Moving around "S" and "E": ![can solve it even if moving S and E around](https://github.com/user-attachments/assets/dcb3f665-99e1-456e-8594-6ad38c2d9230)
+Moving around "`S`" and "`E`": ![can solve it even if moving S and E around](https://github.com/user-attachments/assets/dcb3f665-99e1-456e-8594-6ad38c2d9230)
 
 Even if we increase the grid size: ![even if we increase the grid size it should solve it](https://github.com/user-attachments/assets/ad73edd3-fa22-4977-9819-eaac0f02e39a)
 
