@@ -9,7 +9,9 @@ Union-Find and how its runtime is the inverse Ackerman function (`O(α(n))`). I 
 avoiding the execution of Dijkstra's algorithm on a maze that has no theoretical solution. As the maze dynamically changes with new obstacles "`x`" being added and removed, Union-Find is well suited 
 for these types of scenarios because it allows for efficient merging and querying of connected components. If this was a LARGE maze (1000s+ cells with many permutations) naive connectivity checks 
 are computationally expensive. Preprocessing the maze is `O(nlog*n)` time where n is the number of cells, and connectivity checks between cells is close to constant time. I encourage the user to add 
-1 thousand rows and columns with randomized obstacles and see how this algorithm handles it! 
+1 thousand rows and columns with randomized obstacles and see how this data structure + algorithm combination handles it! The typical benefits of using Union-Find are not obvious when the maze is small
+(like how it is in the example), but when the maze gets incredibly large, with maybe thousands of obstacles, Union-Find quickly identifies whether it can even be solved without having to brute force
+through it.
 
 To run the algorithm, make sure you're in the correct directory ("MazeSolver") and paste `g++ main.cpp MazeSolver.cpp -o MazeSolver` into the terminal. Then `./MazeSolver` to run it. 
 
